@@ -1,0 +1,43 @@
+- name: Install apache2
+  hosts: apache
+  become: yes
+  become_method: sudo
+  connection: ssh
+  gather_facts: yes
+  tasks:
+  - name: Install Apache Ubuntu/Debian.
+    apt:
+      name: apache2
+      state: latest
+    when: inventory_hostname in groups["ubuntu"]
+    notify:
+      - startservice
+  handlers:
+  - name: startservice
+    service:
+      name: apache2
+      state: restarted
+      enabled: yes
+
+#############################
+
+- name: Install httpd
+  hosts: apache
+  become: yes
+  become_method: sudo
+  connection: ssh
+  gather_facts: yes
+  tasks:
+  - name: Install httpd RHEL/CentOS.
+    yum:
+      name: httpd
+      state: latest
+    when: inventory_hostname in groups["centos"]
+    notify:
+    - startservice
+  handlers:
+  - name: startservice
+    service:
+      name: httpd
+      state: restarted
+      enabled: yes

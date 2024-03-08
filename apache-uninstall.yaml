@@ -1,0 +1,28 @@
+- name: Uninstall Apache2
+  hosts: apache
+  become: yes
+  become_method: sudo
+  connection: ssh
+  gather_facts: yes
+  tasks:
+  - name: Uninstall Apache2 Ubuntu/Debian.
+    apt:
+      name: apache2
+      state: absent
+    when: inventory_hostname in groups["ubuntu"]
+
+#########################################3
+
+- name: Uninstall httpd
+  hosts: apache
+  become: yes
+  become_method: sudo
+  connection: ssh
+  gather_facts: yes
+  tasks:
+  - name: Uninstall httpd RHEL/CentOS.
+    yum:
+      name: httpd
+      state: absent
+    when: inventory_hostname in groups["centos"]
+

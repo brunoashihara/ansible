@@ -1,0 +1,38 @@
+ubuntu:
+  hosts:
+    ans-wk01:
+    ans-wk02:
+
+centos:
+  hosts:
+    ans-wk03:
+    ans-wk04:
+
+apache:
+  hosts:
+    ans-wk02:
+    ans-wk04:
+
+nginx:
+  hosts:
+    ans-wk01:
+    ans-wk03:
+
+mysql:
+  hosts:
+    ans-wk01:
+    ans-wk04:
+
+pgs:
+  hosts:
+    ans-wk02:
+    ans-wk03:
+
+datacenter:
+  children:
+    ubuntu:
+    centos:
+    nginx:
+    apache:
+    mysql:
+    pgs:
