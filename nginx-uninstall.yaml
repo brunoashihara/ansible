@@ -1,0 +1,27 @@
+- name: Uninstall Nginx
+  hosts: nginx
+  become: yes
+  become_method: sudo
+  connection: ssh
+  gather_facts: yes
+  tasks:
+  - name: Uninstall nginx Ubuntu/Debian.
+    apt:
+      name: nginx
+      state: absent
+    when: inventory_hostname in groups["ubuntu"]
+#########################################3
+
+- name: Uninstall nginx
+  hosts: nginx
+  become: yes
+  become_method: sudo
+  connection: ssh
+  gather_facts: yes
+  tasks:
+  - name: Uninstall nginx RHEL/CentOS.
+    yum:
+      name: nginx
+      state: absent
+    when: inventory_hostname in groups["centos"]
+
