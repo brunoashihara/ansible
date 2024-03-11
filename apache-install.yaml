@@ -1,4 +1,4 @@
-- name: Install apache2
+- name: Install Apache2 Ubuntu/Debian
   hosts: apache
   become: yes
   become_method: sudo
@@ -21,7 +21,7 @@
 
 #############################
 
-- name: Install httpd
+- name: Install httpd RHEL/CentOS
   hosts: apache
   become: yes
   become_method: sudo

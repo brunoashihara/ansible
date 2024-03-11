@@ -1,4 +1,4 @@
-- name: Uninstall Apache2
+- name: Uninstall Apache2 Ubuntu/Debian
   hosts: apache
   become: yes
   become_method: sudo
@@ -13,7 +13,7 @@
 
 #########################################3
 
-- name: Uninstall httpd
+- name: Uninstall httpd RHEL/CentOS
   hosts: apache
   become: yes
   become_method: sudo
@@ -25,4 +25,3 @@
       name: httpd
       state: absent
     when: inventory_hostname in groups["centos"]
-

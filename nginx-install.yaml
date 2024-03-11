@@ -1,4 +1,4 @@
-- name: Install nginx
+- name: Install Nginx Ubuntu/Debian
   hosts: nginx
   become: yes
   become_method: sudo
@@ -20,8 +20,8 @@
       enabled: yes
 
 #############################
-#
-- name: Install nginx
+
+- name: Install Nginx RHEL/CentOS
   hosts: nginx
   become: yes
   become_method: sudo
@@ -41,4 +41,3 @@
       name: nginx
       state: restarted
       enabled: yes
-

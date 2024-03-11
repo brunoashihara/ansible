@@ -1,4 +1,4 @@
-- name: Uninstall Nginx
+- name: Uninstall Nginx Ubuntu/Debian
   hosts: nginx
   become: yes
   become_method: sudo
@@ -10,9 +10,10 @@
       name: nginx
       state: absent
     when: inventory_hostname in groups["ubuntu"]
-#########################################3
 
-- name: Uninstall nginx
+#########################################
+
+- name: Uninstall Nginx RHEL/CentOS
   hosts: nginx
   become: yes
   become_method: sudo
@@ -24,4 +25,3 @@
       name: nginx
       state: absent
     when: inventory_hostname in groups["centos"]
-
