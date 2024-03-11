@@ -9,6 +9,7 @@ Ansible labs
 3. Criar config
 4. Criar inventario e ansible_host
 5. Criar playbooks
+6. Executar playbooks
 
 ## Arquitetura do lab
 
@@ -127,6 +128,14 @@ ansible all -i inventory.yaml -i ansible_host -m ping
 ```
 
 4. Pronto ambiente está preparado para criação dos próprios playbooks e testes!
+
+## Executar playbooks
+
+Agora para executar suas playbooks rode a seguinte sintaxe:
+
+```bash
+ansible-playbook playbook.yaml -i inventory.yaml -i ansible_host
+```
 
 ## Referências
 
