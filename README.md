@@ -12,7 +12,7 @@ Ansible labs
 
 ## Arquitetura do lab
 
-1. Para esse laboratório foi criado da seguinte forma:
+1. Para esse laboratório foi criado 5 VMs com um sudo user chamado ***lab***:
 
    + ans-control: Control node (Ubuntu 22.04);
    + ans-wk01: Managed node (Ubuntu 22.04);
@@ -49,12 +49,30 @@ Ansible labs
    $ sudo apt install ansible
 ```
 
+2. CentOS
+
+```bash
+   dnf config-manager --set-enabled crb
+   dnf install epel-release epel-next-release -y
+   dnf install ansible -y
+```
+
 ## criar config
 
 1. Crie uma pasta e rode o ***ansible-config*** para criar um arquivo de config para este lab, conforme o exemplo abaixo:
 
 ```bash
    mkdir -p ~/ansible
+   cd ~/ansible
+   ansible-config init --disabled -t all > ~/ansible/ansible.cfg
+```
+
+2. Você também pode optar por utilizar um git clone para criar a pasta ansible e já baixar todos os arquivos:
+
+```bash
+   cd ~/
+   git clone https://github.com/brunoashihara/ansible.git
+   cd ~/ansible
    ansible-config init --disabled -t all > ~/ansible/ansible.cfg
 ```
 
@@ -69,7 +87,7 @@ Ansible labs
 
    + Neste lab utilize os parametros:
 
-        + **ansible_host:** IP do host em questão; 
+        + **ansible_host:** IP do host em questão;
         + **ansible_user:** Usuário para autenticar na hora da execução das tasks;
         + **ansible_ssh_private_key_file:** chave ssh criada;
 
@@ -92,16 +110,18 @@ Ansible labs
 
 2. Antes de criar ou executar novos playbooks, para este lab vamos criar users especificos para o ansible nos *managed nodes* utilizando o playbook *create-user.yaml*
 
-   + Para o comando abaixo substituir o campo ***USUARIOCOMPERMISSAOROOT*** com algum usuário que tenha permissões (sudo) nos ***Managed nodes***;
+   + Para o comando abaixo substituir o campo ***lab*** com algum usuário que tenha permissões (sudo) nos ***Managed nodes***;
    + O comando -kK serve para autenticação, o primeiro k (minusculo) serve para autenticar via user ssh e o segundo K (maiusculo) serve para autenticação sudo;
-
+   + Em caso de erro
 ```bash
-   ansible-playbook create-user.yaml -i inventory.yaml -i ansible_host -u USUARIOCOMPERMISSAOROOT -kK
+   export ANSIBLE_HOST_KEY_CHECKING=False
+   ansible-playbook create-user.yaml -i inventory.yaml  -u lab -kK
 ```
 
 3. Teste se agora é possível mandar comandos sem precisar passar senhas, apenas com as chaves ssh com o comando:
 
 ```bash
+   export ANSIBLE_HOST_KEY_CHECKING=True
    ansible all -i inventory.yaml -i ansible_host -m ping
 ```
 
