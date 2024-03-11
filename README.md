@@ -43,18 +43,18 @@ Ansible labs
 1. Ubuntu
 
 ```bash
-   sudo apt update
-   sudo apt install software-properties-common -y
-   sudo add-apt-repository --yes --update ppa:ansible/ansible
-   sudo apt install ansible -y
+sudo apt update
+sudo apt install software-properties-common -y
+sudo add-apt-repository --yes --update ppa:ansible/ansible
+sudo apt install ansible -y
 ```
 
 2. CentOS
 
 ```bash
-   dnf config-manager --set-enabled crb
-   dnf install epel-release epel-next-release -y
-   dnf install ansible -y
+dnf config-manager --set-enabled crb
+dnf install epel-release epel-next-release -y
+dnf install ansible -y
 ```
 
 ## criar config
@@ -62,18 +62,18 @@ Ansible labs
 1. Crie uma pasta e rode o ***ansible-config*** para criar um arquivo de config para este lab, conforme o exemplo abaixo:
 
 ```bash
-   mkdir -p ~/ansible
-   cd ~/ansible
-   ansible-config init --disabled -t all > ~/ansible/ansible.cfg
+mkdir -p ~/ansible
+cd ~/ansible
+ansible-config init --disabled -t all > ~/ansible/ansible.cfg
 ```
 
 2. Você também pode optar por utilizar um git clone para criar a pasta ansible e já baixar todos os arquivos:
 
 ```bash
-   cd ~/
-   git clone https://github.com/brunoashihara/ansible.git
-   cd ~/ansible
-   ansible-config init --disabled -t all > ~/ansible/ansible.cfg
+cd ~/
+git clone https://github.com/brunoashihara/ansible.git
+cd ~/ansible
+ansible-config init --disabled -t all > ~/ansible/ansible.cfg
 ```
 
 ## Criar inventario e ansible_host
@@ -82,6 +82,7 @@ Ansible labs
 
    + Caso tenha um dns, adicione os IPs dos hosts ao dns, ou adicione localmente no ***/etc/hosts***.
    + Cada grupo de hosts destinam a workloads (nodes) específicos.
+   + Para evitar possíveis erros de ***known_hosts*** é aconselhavel conectar via ssh nos IPs dos hosts
 
 2. Após criado o arquivo de inventário, podemos criar um outro arquivo chamado ***ansible_host*** para apresentar as variaveis e configurações de cada host
 
@@ -94,7 +95,7 @@ Ansible labs
 3. Rode o seguinte comando para listar e verificar possíveis erros ou falta de parametros/configurações em seu inventário:
 
 ```bash
-   ansible-inventory -i inventory.yaml -i ansible_host --list
+ansible-inventory -i inventory.yaml -i ansible_host --list
 ```
 
 ## Criar playbooks
@@ -102,10 +103,10 @@ Ansible labs
 1. Para este lab criaremos duas chaves para acesso aos users ***teste*** e ***ansible***
 
 ```bash
-   ssh-keygen -t rsa -b 4096 -C "ansible" -f "/home/"$USER"/.ssh/id_rsa_ansible" -q
-   ssh-keygen -t rsa -b 4096 -C "teste" -f "/home/"$USER"/.ssh/id_rsa_teste" -q
-   chmod 600 ~/.ssh/id_rsa_ansible
-   chmod 600 ~/.ssh/id_rsa_teste
+ssh-keygen -t rsa -b 4096 -C "ansible" -f "/home/"$USER"/.ssh/id_rsa_ansible" -q
+ssh-keygen -t rsa -b 4096 -C "teste" -f "/home/"$USER"/.ssh/id_rsa_teste" -q
+chmod 600 ~/.ssh/id_rsa_ansible
+chmod 600 ~/.ssh/id_rsa_teste
 ```
 
 2. Antes de criar ou executar novos playbooks, para este lab vamos criar users especificos para o ansible nos *managed nodes* utilizando o playbook *create-user.yaml*
@@ -114,15 +115,15 @@ Ansible labs
    + O comando -kK serve para autenticação, o primeiro k (minusculo) serve para autenticar via user ssh e o segundo K (maiusculo) serve para autenticação sudo;
    + Em caso de erro
 ```bash
-   export ANSIBLE_HOST_KEY_CHECKING=False
-   ansible-playbook create-user.yaml -i inventory.yaml -u lab -kK
+export ANSIBLE_HOST_KEY_CHECKING=False
+ansible-playbook create-user.yaml -i inventory.yaml -u lab -kK
 ```
 
 3. Teste se agora é possível mandar comandos sem precisar passar senhas, apenas com as chaves ssh com o comando:
 
 ```bash
-   export ANSIBLE_HOST_KEY_CHECKING=True
-   ansible all -i inventory.yaml -i ansible_host -m ping
+export ANSIBLE_HOST_KEY_CHECKING=True
+ansible all -i inventory.yaml -i ansible_host -m ping
 ```
 
 4. Pronto ambiente está preparado para criação dos próprios playbooks e testes!
