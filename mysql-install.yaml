@@ -1,0 +1,111 @@
+- name: Install Ubuntu/Debian
+  hosts: mysql
+  become: yes
+  become_method: sudo
+  connection: ssh
+  gather_facts: yes
+  vars:
+    package:
+      - mysql-server
+      - mysql-client
+      - python3-mysqldb
+      - libmysqlclient-dev
+    db_user:
+      - "ansible"
+    db_pass:
+      - "ansible"
+    db_name:
+      - "ansible_db"
+  tasks:
+  - name: Install mysql Ubuntu/Debian.
+    apt:
+      name: "{{ item }}"
+      state: latest
+    when: inventory_hostname in groups["ubuntu"]
+    with_items: "{{ package }}"
+  - name: Start and Enable mysql service
+    service:
+      name: mysql
+      state: started
+      enabled: yes
+  - name: Create mysql user
+    mysql_user:
+      name: "{{ db_user  }}"
+      password: "{{db_pass}}"
+      priv: '*.*:ALL'
+      host: '%'
+      state: present
+  - name: Create mysql db
+    mysql_db:
+      name: "{{db_name}}"
+      state: present
+  - name: Enable remote login to mysql
+    lineinfile:
+      path: /etc/mysql/mysql.conf.d/mysqld.cnf
+      regexp: '^bind-address'
+      line: 'bind-address = 0.0.0.0'
+      backup: yes
+    notify:
+      - restartmysql
+  handlers:
+    - name: restartmysql
+      service:
+        name: mysql
+        state: restarted
+
+#############################
+
+- name: Install mysql RHEL/CentOS
+  hosts: mysql
+  become: yes
+  become_method: sudo
+  connection: ssh
+  gather_facts: yes
+  vars:
+    package:
+      - mysql-server
+      - mysql-client
+      - python3-mysqldb
+      - libmysqlclient-dev
+    db_user:
+      - "ansible"
+    db_pass:
+      - "ansible"
+    db_name:
+      - "ansible_db"
+  tasks:
+  - name: Install mysql RHEL/CentOS.
+    yum:
+      name: "{{ item }}"
+      state: latest
+    when: inventory_hostname in groups["centos"]
+    with_items: "{{ package }}"
+  - name: Start and Enable mysql service
+    service:
+      name: mysql
+      state: started
+      enabled: yes
+  - name: Create mysql user
+    mysql_user:
+      name: "{{db_user}}"
+      password: "{{db_pass}}"
+      priv: '*.*:ALL'
+      host: '%'
+      state: present
+  - name: Create mysql db
+    mysql_db:
+      name: "{{db_name}}"
+      state: present
+  - name: Enable remote login to mysql
+    lineinfile:
+      path: /etc/mysql/mysql.conf.d/mysqld.cnf
+      regexp: '^bind-address'
+      line: 'bind-address = 0.0.0.0'
+      backup: yes
+    notify:
+      - restartmysql
+  handlers:
+    - name: restartmysql
+      service:
+        name: mysql
+        state: restarted
