@@ -51,7 +51,7 @@ Ansible labs
 
 ## criar config
 
-1. Crie uma pasta e rode o *ansible-config* para criar um arquivo de config para este lab, conforme o exemplo abaixo:
+1. Crie uma pasta e rode o ***ansible-config*** para criar um arquivo de config para este lab, conforme o exemplo abaixo:
 
 ```bash
    mkdir -p ~/ansible
@@ -62,16 +62,16 @@ Ansible labs
 
 1. Podemos usar arquivos com extensão yaml (declarativa) ou ini. Para esse lab vamos fazer do formato yaml
 
-   + Caso tenha um dns, adicione os IPs dos hosts ao dns, ou adicione localmente no */etc/hosts*.
+   + Caso tenha um dns, adicione os IPs dos hosts ao dns, ou adicione localmente no ***/etc/hosts***.
    + Cada grupo de hosts destinam a workloads (nodes) específicos.
 
-2. Após criado o arquivo de inventário, podemos criar um outro arquivo chamado *ansible_host* para apresentar as variaveis e configurações de cada host
+2. Após criado o arquivo de inventário, podemos criar um outro arquivo chamado ***ansible_host*** para apresentar as variaveis e configurações de cada host
 
    + Neste lab utilize os parametros:
 
-        + ansible_host: IP do host em questão; 
-        + ansible_user: Usuário para autenticar na hora da execução das tasks;
-        + ansible_ssh_private_key_file: chave ssh criada;
+        + **ansible_host:** IP do host em questão; 
+        + **ansible_user:** Usuário para autenticar na hora da execução das tasks;
+        + **ansible_ssh_private_key_file:** chave ssh criada;
 
 3. Rode o seguinte comando para listar e verificar possíveis erros ou falta de parametros/configurações em seu inventário:
 
@@ -81,7 +81,7 @@ Ansible labs
 
 ## Criar playbooks
 
-1. Para este lab criaremos duas chaves para acesso aos users **teste** e **ansible**
+1. Para este lab criaremos duas chaves para acesso aos users ***teste*** e ***ansible***
 
 ```bash
    ssh-keygen -t rsa -b 4096 -C "ansible" -f "/home/"$USER"/.ssh/id_rsa_ansible" -q
@@ -92,7 +92,7 @@ Ansible labs
 
 2. Antes de criar ou executar novos playbooks, para este lab vamos criar users especificos para o ansible nos *managed nodes* utilizando o playbook *create-user.yaml*
 
-   + Para o comando abaixo substituir o campo *USUARIOCOMPERMISSAOROOT* com algum usuário que tenha permissões (sudo) nos *Managed nodes*;
+   + Para o comando abaixo substituir o campo ***USUARIOCOMPERMISSAOROOT*** com algum usuário que tenha permissões (sudo) nos ***Managed nodes***;
    + O comando -kK serve para autenticação, o primeiro k (minusculo) serve para autenticar via user ssh e o segundo K (maiusculo) serve para autenticação sudo;
 
 ```bash
