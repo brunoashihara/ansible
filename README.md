@@ -115,7 +115,7 @@ Ansible labs
    + Em caso de erro
 ```bash
    export ANSIBLE_HOST_KEY_CHECKING=False
-   ansible-playbook create-user.yaml -i inventory.yaml  -u lab -kK
+   ansible-playbook create-user.yaml -i inventory.yaml -u lab -kK
 ```
 
 3. Teste se agora é possível mandar comandos sem precisar passar senhas, apenas com as chaves ssh com o comando:
