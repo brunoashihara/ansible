@@ -15,11 +15,11 @@ Ansible labs
 
 1. Para esse laboratório foi criado 5 VMs com um sudo user chamado ***lab***:
 
-   + ans-control: Control node (Ubuntu 22.04);
-   + ans-wk01: Managed node (Ubuntu 22.04);
-   + ans_wk02: Managed node (Ubuntu 22.04);
-   + ans_wk03: Managed node (CentOS Stream 9);
-   + ans_wk04: Managed node (CentOS Stream 9);
+   + ans-control: Control node (Ubuntu 22.04) 4 cpu 4 GB ram 50 GB disco;
+   + ans-wk01: Managed node (Ubuntu 22.04) 2 cpu 2 GB ram 50 GB disco;
+   + ans_wk02: Managed node (Ubuntu 22.04) 2 cpu 2 GB ram 50 GB disco;
+   + ans_wk03: Managed node (CentOS Stream 9) 2 cpu 2 GB ram 50 GB disco;
+   + ans_wk04: Managed node (CentOS Stream 9) 2 cpu 2 GB ram 50 GB disco;
 
 2. Grupos no ansible:
 
